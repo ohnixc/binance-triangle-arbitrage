@@ -1,0 +1,51 @@
+{
+
+    "KEYS": {
+        "API": "kfiZHPPtCAp0iCBgexe7pGpZD4pB7DuJgA00VPzqOK74CZyoK5tYuztOWUSBccmW",
+        "SECRET": "M2s4bTx1I0qUh793dOS6sO8dm2I9SfSGNyJweNxmjSGidSsRwRDC7yOqk0xRVCHw"
+    },
+
+    "INVESTMENT": {
+        "BASE": "BTC",
+        "MIN": 0.010,
+        "MAX": 0.015,
+        "STEP": 0.005
+    },
+
+    "SCANNING": {
+        "DEPTH": 50,
+        "WHITELIST": []
+    },
+
+    "EXECUTION": {
+        "ENABLED": false,
+        "CAP": 1,
+        "STRATEGY": "linear",
+        "TEMPLATE": ["BUY", "SELL", "SELL"],
+        "FEE": 0.0075,
+        "THRESHOLD": {
+            "PROFIT": 0.00,
+            "AGE": 25
+        }
+    },
+
+    "HUD": {
+        "ENABLED": true,
+        "ROWS": 10,
+        "REFRESH_RATE": 500
+    },
+
+    "LOG": {
+        "LEVEL": "debug",
+        "PRETTY_PRINT": true,
+        "STATUS_UPDATE_INTERVAL": 2
+    },
+
+    "WEBSOCKET": {
+        "BUNDLE_SIZE": 1,
+        "INITIALIZATION_INTERVAL": 200
+    },
+
+    "BINANCE_OPTIONS": {}
+
+}
