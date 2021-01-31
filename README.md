@@ -6,10 +6,7 @@
 
 This app monitors the [Binance](https://www.binance.com) cryptocurrency exchange in search of triangle arbitrage opportunities.
 
-## The HUD
-The HUD is the chart displayed above. It is repainted after each calculation cycle to show snapshots of currently detected
-arbitrage opportunities. To disable the HUD, set `HUD.ENABLED` to false.
-
+This repo has been tested in the sandbox, but not in the real world. Prices are accurate and trades concurrently with the data pull.
 
 ### Reading the HUD
 * **Trade** - Three symbols related by exchange rates that are involved in the triangle arbitrage.
@@ -34,23 +31,17 @@ The following dependencies are recommended to run an instance:
 ### Obtain the Codebase
 * Clone from github
     ```
-    git clone https://github.com/bmino/binance-triangle-arbitrage.git
+    git clone https://github.com/ohnixc/binance-triangle-arbitrage.git
     ```
-* Download a zip of the [latest release](https://github.com/bmino/binance-triangle-arbitrage/releases/latest)
-
 
 ### Configuration
-All configuration is managed inside the `/config` directory.
-To setup your configuration for the first time, duplicate the `config.json.example` file and remove the ".example" extension.
-This process must be done before deploying the app for the first time and redone after each major version update where the configuration has changed.
-Explanations of each value can be found [here](config/README.md).
+```
+cp config.json.example config.json
+update your API KEY and API SECRET
+```
 
-### Assumptions
-1. All fees are [paid via BNB balance](https://binance.zendesk.com/hc/en-us/articles/115000583311)
-2. Sufficient quantity of BNB is maintained during the runtime of the bot
-
-### Deployment
-1. Install project dependencies
+### Install
+1. Install dependencies
     ```
     cd binance-triangle-arbitrage
     npm install
@@ -61,14 +52,12 @@ Explanations of each value can be found [here](config/README.md).
     npm start
     ```
 
-
 ## Execution Strategies
 There are two supported methods of executing an identified triangle arbitrage opportunity.
 More details [here](src/resources/docs/strategies.md)
 
 * **Linear** - Execute three trades sequentially with each being initiated after the previous has completed
 * **Parallel** - Execute three trades asynchronously with each being initiated at the same time
-
 
 ## Logging
 All logs are stored in the `/logs` directory. The log level is set via the `LOG.LEVEL` configuration property.
@@ -78,20 +67,5 @@ All logs are stored in the `/logs` directory. The log level is set via the `LOG.
 * **binance.log** - Binance api logging
 
 
-## Authors
-* **[Brandon Mino](https://github.com/bmino)** - *Project Lead*
+** Forked from https://github.com/bmino/binance-triangle-arbitrage
 
-See also the list of [contributors](https://github.com/bmino/binance-triangle-arbitrage/contributors) who participated in this project.
-
-
-## Donations
-The developers listed above created and maintain this project for free.
-I don't expect any compensation, but if you appreciate my work feel free to donate to the following addresses:
-
-* Ethereum (ERC20): 0xFd7b8597cF8eE5317439B0B5C55a111F6Eec449D
-
-## License
-This project is licensed under mit
-
-# binance-triangle-arbitrage
-# binance-triangle-arbitrage
