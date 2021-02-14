@@ -46,56 +46,23 @@ const CalculationNode = {
             ab: 0,
             bc: 0,
             ca: 0,
-            profit:  0,
             depth: depthSnapshot,
             a: {
                 spent: 0,
                 earned: 0,
-                delta: 0,
-                profit:0,
-
+                delta: 0
             },
             b: {
                 spent: 0,
                 earned: 0,
-                delta: 0,
-                profit:0,
-
+                delta: 0
             },
             c: {
                 spent: 0,
                 earned: 0,
-                delta: 0,
-                profit:0,
-
-            },
+                delta: 0
+            }
         };
-
-
-        // const calculateProfit = {
-        //     ab: {
-        //         actual: price.ab.actual,
-        //         expected: price.ab.expected,
-        //         profit: (price.ab.expected - price.ab.actual)/price.ab.expected
-        //     },
-        //     bc: {
-        //         actual: price.bc.actual,
-        //         expected: price.bc.expected,
-        //         profit: (price.bc.expected - price.bc.actual)/price.bc.expected
-        //     },
-        //     ca: {
-        //         actual: price.ca.actual,
-        //         expected: price.ca.expected,
-        //         profit: (price.bc.expected - price.bc.actual)/price.bc.expected
-        //     },
-
-        // };
-
-        // const totalProfit = {
-
-        //     totalProfit: (calculateProfit.ab.profit + calculateProfit.bc.profit + calculateProfit.ca.profit) - (CONFIG.EXECUTION.FEE*3)
-
-        // };
 
         if (trade.ab.method === 'BUY') {
             // Buying BA
@@ -134,49 +101,6 @@ const CalculationNode = {
         calculated.a.delta = calculated.a.earned - calculated.a.spent;
         calculated.b.delta = calculated.b.earned - calculated.b.spent;
         calculated.c.delta = calculated.c.earned - calculated.c.spent;
-
-
-        calculated.a.profit = calculated.a.delta/calculated.a.earnt;
-        calculated.b.profit = calculated.b.delta/calculated.a.earnt;
-        calculated.c.profit = calculated.c.delta/calculated.a.earnt;
-
-
-
-
-
-
-                // const calculateProfit = {
-        //     ab: {
-        //         actual: price.ab.actual,
-        //         expected: price.ab.expected,
-        //         profit: (price.ab.expected - price.ab.actual)/price.ab.expected
-        //     },
-        //     bc: {
-        //         actual: price.bc.actual,
-        //         expected: price.bc.expected,
-        //         profit: (price.bc.expected - price.bc.actual)/price.bc.expected
-        //     },
-        //     ca: {
-        //         actual: price.ca.actual,
-        //         expected: price.ca.expected,
-        //         profit: (price.bc.expected - price.bc.actual)/price.bc.expected
-        //     },
-
-        // };
-
-        // const totalProfit = {
-
-        //     totalProfit: (calculateProfit.ab.profit + calculateProfit.bc.profit + calculateProfit.ca.profit) - (CONFIG.EXECUTION.FEE*3)
-
-        // calculated.profit = (calculated.a.delta + calculated.b.delta + calculated.c.delta) - (CONFIG.EXECUTION.FEE * 3);
-
-        //calculate profit
-        // calculated.a.profit = (calculated.a.delta / calculated.a.spent) - (CONFIG.EXECUTION.FEE * 3);
-        // calculated.b.profit = (calculated.b.delta / calculated.b.spent) - (CONFIG.EXECUTION.FEE * 3);
-        // calculated.c.profit = (calculated.c.delta / calculated.c.spent) - (CONFIG.EXECUTION.FEE * 3);
-        
-
-        // calculated.profit = calculated.a.delta - (CONFIG.EXECUTION.FEE*3)
 
         calculated.percent = (calculated.a.delta / calculated.a.spent * 100) - (CONFIG.EXECUTION.FEE * 3);
         if (!calculated.percent) calculated.percent = -100;

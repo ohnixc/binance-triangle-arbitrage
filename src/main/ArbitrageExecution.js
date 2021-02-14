@@ -51,7 +51,6 @@ const ArbitrageExecution = {
                     }
                 };
 
-
                 logger.execution.debug(`${calculated.trade.ab.ticker} Stats:`);
                 logger.execution.debug(`Expected Conversion:  ${calculated.a.spent.toFixed(8)} ${symbol.a} into ${calculated.b.earned.toFixed(8)} ${symbol.b} @ ${price.ab.expected.toFixed(8)}`);
                 logger.execution.debug(`Observed Conversion:  ${actual.a.spent.toFixed(8)} ${symbol.a} into ${actual.b.earned.toFixed(8)} ${symbol.b} @ ${price.ab.actual.toFixed(8)}`);
@@ -76,44 +75,11 @@ const ArbitrageExecution = {
                 logger.execution.trace(`Pruned depth cache used for calculation:`);
                 logger.execution.trace(prunedDepthSnapshot);
 
-                const profit = {
-
-                    ab: (price.ab.actual - price.ab.expected) / price.ab.expected,
-                    bc: (price.bc.actual - price.bc.expected) / price.bc.expected,
-                    ca: (price.ca.actual - price.ca.expected) / price.ca.expected
-                
-                };
-
-                    // ab: {
-                    //     actual: price.ab.actual,
-                    //     expected: price.ab.expected,
-                    //     profit: (price.ab.expected - price.ab.actual)/price.ab.expected
-                    // },
-                    // bc: {
-                    //     actual: price.bc.actual,
-                    //     expected: price.bc.expected,
-                    //     profit: (price.bc.expected - price.bc.actual)/price.bc.expected
-                    // },
-                    // ca: {
-                    //     actual: price.ca.actual,
-                    //     expected: price.ca.expected,
-                    //     profit: (price.bc.expected - price.bc.actual)/price.bc.expected
-                    // },
-
-
-
-                // const totalProfit = {
-
-                //     totalProfit: (calculateProfit.ab.profit + calculateProfit.bc.profit + calculateProfit.ca.profit) - (CONFIG.EXECUTION.FEE*3)
-
-                // };
-
                 const percent = {
                     a: actual.a.delta / actual.a.spent * 100,
                     b: actual.b.delta / actual.b.spent * 100,
                     c: actual.c.delta / actual.c.spent * 100
                 };
-    
 
                 logger.execution.info();
                 logger.execution.info(`${symbol.a} delta:\t  ${actual.a.delta < 0 ? '' : ' '}${actual.a.delta.toFixed(8)} (${percent.a < 0 ? '' : ' '}${percent.a.toFixed(4)}%)`);
@@ -202,34 +168,32 @@ const ArbitrageExecution = {
                 let actual = {
                     a: {
                         spent: 0,
-                        earned: 0,
+                        earned: 0
                     },
                     b: {
                         spent: 0,
-                        earned: 0,
+                        earned: 0
                     },
                     c: {
                         spent: 0,
-                        earned: 0,
+                        earned: 0
                     },
-                    fees: 0,
-                    profit: 0
-                    // total_profit: 0
+                    fees: 0
                 };
 
                 if (resultsAB.orderId && resultsBC.orderId && resultsCA.orderId) {
-                    [actual.a.spent, actual.b.earned, profit, fees] = ArbitrageExecution.parseActualResults(calculated.trade.ab.method, resultsAB);
-                    actual.profit = calculated.ab.profit;
+                    [actual.a.spent, actual.b.earned, fees] = ArbitrageExecution.parseActualResults(calculated.trade.ab.method, resultsAB);
                     actual.fees += fees;
 
-                    [actual.b.spent, actual.c.earned, profit, fees] = ArbitrageExecution.parseActualResults(calculated.trade.bc.method, resultsBC);
-                    actual.profit = calculated.bc.profit;
+                    [actual.b.spent, actual.c.earned, fees] = ArbitrageExecution.parseActualResults(calculated.trade.bc.method, resultsBC);
                     actual.fees += fees;
 
-                    [actual.c.spent, actual.a.earned, profit, fees] = ArbitrageExecution.parseActualResults(calculated.trade.ca.method, resultsCA);
-                    actual.profit = calculated.ca.profit;
+                    [actual.c.spent, actual.a.earned, fees] = ArbitrageExecution.parseActualResults(calculated.trade.ca.method, resultsCA);
                     actual.fees += fees;
 
+                    actual.a.delta = actual.a.earned - actual.a.spent;
+                    actual.b.delta = actual.b.earned - actual.b.spent;
+                    actual.c.delta = actual.c.earned - actual.c.spent;
                 }
 
                 return actual;
@@ -250,8 +214,7 @@ const ArbitrageExecution = {
                 spent: 0,
                 earned: 0
             },
-            fees: 0,
-            // profit: 0
+            fees: 0
         };
         let recalculated = {
             bc: calculated.bc,
@@ -282,12 +245,12 @@ const ArbitrageExecution = {
                 }
                 return actual;
             })
-            .then((results) => {
+            .then((actual) => {
                 actual.a.delta = actual.a.earned - actual.a.spent;
                 actual.b.delta = actual.b.earned - actual.b.spent;
                 actual.c.delta = actual.c.earned - actual.c.spent;
                 return actual;
-            })
+            });
     },
 
     parseActualResults(method, { executedQty, cummulativeQuoteQty, fills }) {
